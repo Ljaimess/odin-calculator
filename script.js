@@ -7,16 +7,19 @@ let num1 = "";
 let num2 = "";
 let operator = "";
 let result = "";
+numDisplay.innerText = "numbers here";
 
 numButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        numDisplay.innerHTML = '';
-        numDisplay.innerText += button.innerText;
+        if (numDisplay.innerText === "numbers here") {
+            numDisplay.innerText = "";
+        }
         if (operator === "") {
             num1 += button.innerText;
         } else {
             num2 += button.innerText;
         }
+        numDisplay.innerText += button.innerText;
         console.log(num1, num2, operator);
     });
 });
@@ -24,8 +27,7 @@ numButtons.forEach((button) => {
 operators.forEach((op) => {
     op.addEventListener("click", () => {
         operator = op.innerText;
-        numDisplay.innerHTML = "";
-        console.log(operator + "q");
+        numDisplay.innerHTML += operator;
     });
 });
 
@@ -38,5 +40,25 @@ clearButton.addEventListener("click", () => {
 });
 
 enterButton.addEventListener("click", () => {
-
+    if (num1 !== "" && num2 !== "" && operator !== "") {
+        result = operate(num1, num2, operator);
+        numDisplay.innerHTML = result;
+        num1 = "";
+        num2 = "";
+        operator = "";
+    }
 });
+
+const operate = (num1, num2, operator) => {
+    if (operator === "+") {
+        return parseFloat(num1) + parseFloat(num2);
+    } else if (operator === "-") {
+        return num1 - num2;
+    } else if (operator === "*") {
+        return num1 * num2;
+    } else if (operator === "/") {
+        return num1 / num2;
+    } else {
+        return "Error";
+    }
+};
